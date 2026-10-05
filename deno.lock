@@ -1,0 +1,9 @@
+{
+  "version": "5",
+  "remote": {
+    "http://gnlow.dev/rude@0.0.0-beta.3": "5811a9fce4aba8a376c661a9e338fbd92221500dcc0aa881d9a6c2f2fd69aa11",
+    "http://gnlow.dev/rude@0.0.0-beta.5": "646820eec6ce282cb1dd45b2da8e59d1f29ef66e538bbb340038fd3649b062ce",
+    "https://raw.esm.sh/gh/gnlow/rude@0.0.0-beta.3/mod.ts": "df4d8392096b8e54804fff75a01674545e121dace3a765dc6b4e7ca84c65c4e2",
+    "https://raw.esm.sh/gh/gnlow/rude@0.0.0-beta.5/mod.ts": "b790618dc9254d35c4f91fd8313134b63c717ebad422ed227300066f83671997"
+  }
+}

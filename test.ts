@@ -2,8 +2,8 @@ import { Observable, Subject, tags } from "./mod.ts"
 
 const { div } = tags
 
-const inc$ = new Subject
-const dec$ = new Subject
+const inc$ = new Subject<number>
+const dec$ = new Subject<number>
 const cnt$ = Observable.merge(
     inc$.map(() => +1),
     dec$.map(() => -1),

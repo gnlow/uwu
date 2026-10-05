@@ -1,28 +1,37 @@
-import { Observable, Subject } from "http://gnlow.dev/rude@0.0.0-beta.2"
+import { Observable, Subject } from "http://gnlow.dev/rude@0.0.0-beta.5"
 export { Observable, Subject }
 
 const size =
 (n: number) =>
     Number.isNaN(Number(n))
-        ? n
+        ? `${n}`
         : `${n}px`
 
 const muts = {
-    p: (el: Element) =>
+    p: (el: HTMLElement) =>
     (...ns: number[]) => {
         el.style.padding = ns.map(size).join(" ")
     },
-    font: (el: Element) =>
+    font: (el: HTMLElement) =>
     (n: number) => {
         el.style.fontSize = size(n)
     },
+} as Record<string, (el: HTMLElement) => (...args: any[]) => void>
+
+type Velem = {
+    (...children: (HTMLElement | string | number | Observable<HTMLElement | string | number>)[]): HTMLElement
+} & {
+    [K in keyof typeof muts]: (...args: Parameters<ReturnType<(typeof muts)[K]>>) => Velem
 }
 
 const velem =
-(makeEl: () => Element) => new Proxy(function () {}, {
+(makeEl: () => HTMLElement) => new Proxy(function () {}, {
     get(target, prop) {
+        if (typeof prop == "symbol") {
+            return Reflect.get(target, prop)
+        }
         if (prop.startsWith("on")) {
-            return ob => velem(() => {
+            return (ob: Subject<unknown>) => velem(() => {
                 const el = makeEl()
                 if (!(ob instanceof Subject)) {
                     throw new Error("EventListener must be Subject")
@@ -35,7 +44,7 @@ const velem =
             return (...args: unknown[]) => velem(() => {
                 const el = makeEl()
                 if (args.some(arg => arg instanceof Observable)) {
-                    Observable.combineLatest(args)
+                    Observable.combineLatest([args])
                         .subscribe(args => {
                             muts[prop](el)(...args)
                         })
@@ -68,10 +77,13 @@ const velem =
         })
         return el
     },
-})
+}) as Velem
 
 export const tags = new Proxy({}, {
     get(target, prop) {
+        if (typeof prop == "symbol") {
+            return Reflect.get(target, prop)
+        }
         return velem(() => document.createElement(prop))
     },
-})
+}) as Record<string, Velem>
