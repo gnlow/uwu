@@ -60,7 +60,7 @@ const velem =
                     child = v
                 })
             } else {
-                if (!(args instanceof Element)) {
+                if (!(arg instanceof Element)) {
                     arg = document.createTextNode(arg)
                 }
                 el.append(arg)

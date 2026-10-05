@@ -14,3 +14,5 @@ const app = div.p(10)(
     div.font(cnt$.map(x => x*10))(cnt$),
     div.onclick(dec$)("-"),
 )
+
+document.body.replaceChildren(app)
