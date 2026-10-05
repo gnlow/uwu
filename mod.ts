@@ -1,4 +1,4 @@
-import { Observable, Subject } from "http://gnlow.dev/rude@0.0.0-beta.5"
+import { Observable, Subject } from "https://gnlow.dev/rude@0.0.0-beta.5"
 export { Observable, Subject }
 
 const size =
