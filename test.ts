@@ -9,7 +9,7 @@ const cnt$ = Observable.merge(
     dec$.map(() => -1),
 ).scan((a, b) => a+b, 1)
 
-const app = div.p(10)(
+const app = div.b(1, "solid black").p(10)(
     div.onclick(inc$)("+"),
     div.font(cnt$.map(x => x*10))(cnt$),
     div.onclick(dec$)("-"),
