@@ -29,7 +29,7 @@ export const Velem =
             return (...args: unknown[]) => Velem(() => {
                 const el = makeEl()
                 if (args.some(arg => arg instanceof Observable)) {
-                    Observable.combineLatest([args])
+                    Observable.combineLatest(args)
                         .subscribe(args => {
                             muts[prop](el)(...args)
                         })
